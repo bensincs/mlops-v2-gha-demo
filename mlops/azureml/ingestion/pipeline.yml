@@ -1,0 +1,38 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+experiment_name: taxi-fare-training
+description: Training Pipeline to train a model that predicts taxi fare price
+
+# <inputs_and_outputs>
+inputs:
+  input:
+    type: uri_file
+    path: azureml:coco-data@latest
+
+
+outputs:
+  format_report:
+  format_info:
+
+settings:
+  default_datastore: azureml:workspaceblobstore
+  default_compute: azureml:cpu-cluster
+  continue_on_step_failure: false
+
+jobs:
+  data_format_detector:
+    name: data_format_detector
+    display_name: Data Format Detector
+    code: ../../../data-science/src
+    environment: azureml:taxi-train-env@latest
+    inputs:
+      input_data: ${{parent.inputs.input}}
+    outputs:
+      format_info: ${{parent.outputs.format_info}}
+      format_report: ${{parent.outputs.format_report}}
+    command: >-
+      python data_format_detector.py
+      --input-data ${{inputs.input_data}}
+      --format-info ${{outputs.format_info}}
+      --format-report ${{outputs.format_report}}
+
