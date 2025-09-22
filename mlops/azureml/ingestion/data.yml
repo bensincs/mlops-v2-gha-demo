@@ -8,4 +8,4 @@ $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 type: uri_folder
 name: coco-data
 description: coco dataset
-path: ../../../data/coco/
+path: ../../../data/coco-data/
