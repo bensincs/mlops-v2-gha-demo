@@ -1,6 +1,6 @@
 projectName="benmlops"
 roleName="Contributor"
-subscriptionId="5adbea61-9c6c-45a1-ba49-9be51ca17818"
+subscriptionId="fde39ef3-ba50-49cd-821b-d929985bc10f"
 environment="Dev" #First letter should be capitalized
 servicePrincipalName="Azure-ARM-${environment}-${projectName}"
 # Verify the ID of the active subscription
