@@ -34,9 +34,7 @@ jobs:
       - name: azure-login
         uses: azure/login@v1
         with:
-          creds: ${{ env.AZURE_CREDENTIALS }}
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.azure_creds }}
+          creds: ${{ secrets.creds }}
       - name: install-extension
         run: az extension add -n ml -y
       - name: update-extension
