@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+
+type: uri_folder
+name: yolo-data
+description: yolo dataset
+path: ../../../data/yolo-data/

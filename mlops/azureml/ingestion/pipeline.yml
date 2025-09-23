@@ -1,7 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
 experiment_name: ingestion-pipeline
-description: Ingestion Pipeline to detect data format
 
 # <inputs_and_outputs>
 inputs:
@@ -9,10 +8,13 @@ inputs:
     type: uri_file
     path: azureml:coco-data@latest
 
-
 outputs:
+  output_data:
+    type: uri_folder
   format_report:
-  format_info:
+    type: uri_file
+  processing_report:
+    type: uri_file
 
 settings:
   default_datastore: azureml:workspaceblobstore
@@ -23,16 +25,35 @@ jobs:
   data_format_detector:
     name: data_format_detector
     display_name: Data Format Detector
+    description: Automatically detect the format of input dataset (COCO, YOLO, etc.)
     code: ../../../data-science/src
-    environment: azureml:taxi-train-env@latest
+    environment: azureml://registries/azureml/environments/sklearn-1.5/versions/4
     inputs:
       input_data: ${{parent.inputs.input}}
     outputs:
-      format_info: ${{parent.outputs.format_info}}
+      format_info:
+        type: uri_file
       format_report: ${{parent.outputs.format_report}}
     command: >-
       python data_format_detector.py
       --input-data ${{inputs.input_data}}
       --format-info ${{outputs.format_info}}
       --format-report ${{outputs.format_report}}
-
+  unified_data_processor:
+    name: unified_data_processor
+    display_name: Unified Data Processor
+    description: Process data based on detected format - either convert COCO to YOLO or copy YOLO directly
+    code: ../../../data-science/src
+    environment: azureml://registries/azureml/environments/sklearn-1.5/versions/4
+    inputs:
+      input_data: ${{parent.inputs.input}}
+      detected_format: ${{parent.jobs.data_format_detector.outputs.format_info}}
+    outputs:
+      output_data: ${{parent.outputs.output_data}}
+      processing_report: ${{parent.outputs.processing_report}}
+    command: >-
+      python unified_data_processor.py
+      --input-data ${{inputs.input_data}}
+      --detected-format ${{inputs.detected_format}}
+      --output-data ${{outputs.output_data}}
+      --processing-report ${{outputs.processing_report}}

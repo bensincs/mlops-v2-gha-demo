@@ -1,0 +1,38 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+experiment_name: training-pipeline
+
+# <inputs_and_outputs>
+inputs:
+  input:
+    type: uri_file
+    path: azureml:yolo-data@latest
+
+outputs:
+  model_output:
+    type: uri_folder
+
+settings:
+  default_datastore: azureml:workspaceblobstore
+  default_compute: azureml:cpu-cluster
+  continue_on_step_failure: false
+
+jobs:
+  train_yolo:
+    type: command
+    display_name: yolo-train
+    description: Train YOLOv8 model on provided dataset
+    code: ../../../data-science/src
+    environment: azureml:train-yolo@latest
+    compute: azureml:cpu-cluster
+    inputs:
+      training_data: ${{parent.inputs.input}}
+    outputs:
+      model_dir: ${{parent.outputs.model_output}}
+    command: >-
+      python train.py
+      --data ${{inputs.training_data}}/data.yaml
+      --epochs 5
+      --imgsz 640
+      --model yolov8n.pt
+      --output ${{outputs.model_dir}}

@@ -1,0 +1,24 @@
+{
+  "yaml.schemas": {
+    "https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json": [
+      "**/aml-pipeline*.y?(a)ml",
+      "**/pipeline.y?(a)ml",
+      "**/pipeline_aml*.y?(a)ml",
+      "file:///Users/bensinclair/projects/mlops-v2-gha-demo/mlops/azureml/ingestion/pipeline.yml",
+      "file:///Users/bensinclair/projects/mlops-v2-gha-demo/mlops/azureml/train/pipeline.yml",
+      "file:///Users/bensinclair/projects/mlops-v2-gha-demo/mlops/azureml/train_yolo/pipeline.yml"
+    ],
+    "https://azuremlschemas.azureedge.net/latest/data.schema.json": [
+      "**/aml-data*.y?(a)ml",
+      "**/data.y?(a)ml",
+      "**/data_aml*.y?(a)ml",
+      "file:///Users/bensinclair/projects/mlops-v2-gha-demo/mlops/azureml/ingestion/data.yml"
+    ],
+    "https://azuremlschemas.azureedge.net/latest/environment.schema.json": [
+      "**/aml-environment*.y?(a)ml",
+      "**/environment.y?(a)ml",
+      "**/environment_aml*.y?(a)ml",
+      "file:///Users/bensinclair/projects/mlops-v2-gha-demo/mlops/azureml/train/environment.yml"
+    ]
+  }
+}

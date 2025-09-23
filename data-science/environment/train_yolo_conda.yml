@@ -1,0 +1,53 @@
+name: yolo-train
+channels:
+  - conda-forge
+  - pytorch
+  - anaconda
+dependencies:
+  - python=3.10
+  - pip
+  # Core dependencies (conda)
+  - numpy>=1.24.3
+  - pandas>=2.1.4
+  - pillow>=10.1.0
+  - pyyaml>=6.0.1
+  - requests>=2.31.0
+  - matplotlib>=3.8.2
+  - seaborn>=0.13.0
+  - tqdm>=4.66.1
+  - jupyter>=1.0.0
+  - notebook>=7.0.6
+  - ipywidgets>=8.1.1
+  - pytest>=7.4.3
+  - pytest-cov>=4.1.0
+  - black>=23.11.0
+  - isort>=5.12.0
+  - flake8>=6.1.0
+  # PyTorch ecosystem
+  - pytorch>=2.1.0
+  - torchvision>=0.16.0
+  # Pip dependencies
+  - pip:
+      # Azure ML SDK
+      - azure-ai-ml>=1.12.0
+      - azure-identity>=1.15.0
+      - azure-storage-blob>=12.19.0
+      - azure-core>=1.29.5
+      - azure-mgmt-core>=1.4.0
+      - msal>=1.24.1
+      - msal-extensions>=1.0.0
+      # Training / DL
+      - ultralytics>=8.0.206
+      - transformers>=4.36.0
+      - opencv-python>=4.8.1
+      # MLflow (pinned for Azure artifact compatibility)
+      - mlflow==1.30.0
+      - azureml-mlflow==1.52.0
+      # Dataset and API access
+      - kaggle>=1.5.16
+      - roboflow
+      # Visualization
+      - plotly>=5.17.0
+      # Utilities
+      - pathlib2>=2.3.7
+      - python-dotenv>=1.0.0
