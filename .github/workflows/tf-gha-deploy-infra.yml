@@ -8,7 +8,7 @@ jobs:
   get-config:
     uses: Azure/mlops-templates/.github/workflows/read-yaml.yml@main
     with:
-      file_name: config-infra-prod.yml
+      file_name: config-infra-dev.yml
   test-terraform-state-deployment:
     needs: get-config
     uses: Azure/mlops-templates/.github/workflows/tf-gha-install-terraform.yml@main
