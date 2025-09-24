@@ -9,8 +9,8 @@ inputs:
     path: azureml:yolo-data@latest
 
 outputs:
-  model_output:
-    type: uri_folder
+  model_info_output_path:
+    type: uri_file
 
 settings:
   default_datastore: azureml:workspaceblobstore
@@ -18,7 +18,7 @@ settings:
   continue_on_step_failure: false
 
 jobs:
-  train_yolo:
+  train_model:
     type: command
     display_name: yolo-train
     description: Train YOLOv8 model on provided dataset
@@ -28,11 +28,28 @@ jobs:
     inputs:
       training_data: ${{parent.inputs.input}}
     outputs:
-      model_dir: ${{parent.outputs.model_output}}
+      model_output:
+        type: uri_folder
     command: >-
       python train.py
       --data ${{inputs.training_data}}/data.yaml
       --epochs 5
       --imgsz 640
       --model yolov8n.pt
-      --output ${{outputs.model_dir}}
+      --output ${{outputs.model_output}}
+
+  register_model:
+    name: register_model
+    display_name: register-model
+    code: ../../../data-science/src
+    command: >-
+      python register.py
+      --model_name ${{inputs.model_name}}
+      --model_path ${{inputs.model_path}}
+      --model_info_output_path ${{outputs.model_info_output_path}}
+    environment: azureml:train-yolo@latest
+    inputs:
+      model_name: "yolo-model"
+      model_path: ${{parent.jobs.train_model.outputs.model_output}}
+    outputs:
+      model_info_output_path: ${{parent.outputs.model_info_output_path}}

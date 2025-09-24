@@ -1,4 +1,4 @@
-name: yolo-train
+name: lpr-env
 channels:
   - conda-forge
   - pytorch
@@ -6,7 +6,8 @@ channels:
 dependencies:
   - python=3.10
   - pip
-  # Core dependencies (conda)
+
+  # Core dependencies available via conda-forge
   - numpy>=1.24.3
   - pandas>=2.1.4
   - pillow>=10.1.0
@@ -23,12 +24,14 @@ dependencies:
   - black>=23.11.0
   - isort>=5.12.0
   - flake8>=6.1.0
-  # PyTorch ecosystem
+
+  # PyTorch ecosystem (from pytorch channel)
   - pytorch>=2.1.0
   - torchvision>=0.16.0
-  # Pip dependencies
+
+  # Pip dependencies (Azure ML, ML frameworks, and specialized packages)
   - pip:
-      # Azure ML SDK
+      # Core Azure ML SDK v2
       - azure-ai-ml>=1.12.0
       - azure-identity>=1.15.0
       - azure-storage-blob>=12.19.0
@@ -36,18 +39,21 @@ dependencies:
       - azure-mgmt-core>=1.4.0
       - msal>=1.24.1
       - msal-extensions>=1.0.0
-      # Training / DL
+
+      # Machine Learning and Deep Learning
       - ultralytics>=8.0.206
       - transformers>=4.36.0
+
+      # Computer Vision
       - opencv-python>=4.8.1
-      # MLflow (pinned for Azure artifact compatibility)
-      - mlflow==1.30.0
-      - azureml-mlflow==1.52.0
+
       # Dataset and API access
       - kaggle>=1.5.16
       - roboflow
+
       # Visualization
       - plotly>=5.17.0
+
       # Utilities
       - pathlib2>=2.3.7
       - python-dotenv>=1.0.0

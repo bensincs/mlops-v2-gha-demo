@@ -31,6 +31,10 @@ resource "azurerm_machine_learning_compute_cluster" "adl_aml_ws_compute_cluster"
     max_node_count                       = 4
     scale_down_nodes_after_idle_duration = "PT120S" # 120 seconds
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 # # Datastore
